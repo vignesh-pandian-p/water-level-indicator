@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Level Monitor</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="app-title">Water Level Monitor</h1>
+            <div class="user-info">
+                <i data-lucide="user-circle" class="user-icon"></i>
+                <span class="user-name">Admin User</span>
+            </div>
+        </header>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard">
+            <!-- Left Section: Tank Visualization -->
+            <section class="tank-section">
+                <div class="section-title">Live Water Level</div>
+                <div class="tank-wrapper">
+                    <div class="tank-3d">
+                        <div class="tank-top"></div>
+                        <div class="tank-body">
+                            <div class="water-level" id="waterLevel">
+                                <div class="water-surface">
+                                    <div class="wave"></div>
+                                    <div class="wave wave-2"></div>
+                                    <div class="wave wave-3"></div>
+                                </div>
+                                <div class="water-shine"></div>
+                            </div>
+                            <div class="level-percentage" id="levelPercentage">...</div>
+                            <!-- Level markers -->
+                            <div class="level-marker" style="bottom: 80%;"><span>100%</span></div>
+                            <div class="level-marker" style="bottom: 60%;"><span>75%</span></div>
+                            <div class="level-marker" style="bottom: 40%;"><span>50%</span></div>
+                            <div class="level-marker" style="bottom: 20%;"><span>25%</span></div>
+                            <div class="level-marker" style="bottom: 0%;"><span>0%</span></div>
+                        </div>
+                    </div>
+                    <div class="tank-volume">Volume: <span id="volumeDisplay">...</span> Liters</div>
+                </div>
+            </section>
+
+            <!-- Right Section: Status Cards -->
+            <section class="status-section">
+                <!-- Motor Pump Card -->
+                <div class="status-card motor-card">
+                    <div class="status-bar motor-bar" id="motorBar"></div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <span class="card-label">MOTOR PUMP</span>
+                            <div class="status-icon-wrapper motor-icon-wrapper" id="motorIconWrapper">
+                                <i data-lucide="power" class="status-icon"></i>
+                            </div>
+                        </div>
+                        <div class="card-value">
+                            <span class="value-text" id="motorStatus">...</span>
+                            <span class="value-subtext" id="motorSubtext">Loading</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Health Card -->
+                <div class="status-card health-card">
+                    <div class="status-bar health-bar"></div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <span class="card-label">SYSTEM HEALTH</span>
+                            <div class="status-icon-wrapper health-icon-wrapper">
+                                <i data-lucide="activity" class="status-icon"></i>
+                            </div>
+                        </div>
+                        <div class="card-value">
+                            <span class="value-text" id="systemHealth">...</span>
+                            <span class="value-subtext" id="healthSubtext">Loading</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Distance Card -->
+                <div class="status-card distance-card">
+                    <div class="status-bar distance-bar"></div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <span class="card-label">DISTANCE</span>
+                            <div class="status-icon-wrapper distance-icon-wrapper">
+                                <i data-lucide="ruler" class="status-icon"></i>
+                            </div>
+                        </div>
+                        <div class="card-value">
+                            <span class="value-text" id="distanceValue">...</span>
+                            <span class="value-unit">cm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tank Capacity Card -->
+                <div class="status-card capacity-card">
+                    <div class="status-bar capacity-bar"></div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <span class="card-label">CAPACITY</span>
+                            <div class="status-icon-wrapper capacity-icon-wrapper">
+                                <i data-lucide="droplets" class="status-icon"></i>
+                            </div>
+                        </div>
+                        <div class="card-value">
+                            <span class="value-text" id="capacityPercent">...</span>
+                            <span class="value-unit">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Connection Status Card -->
+                <div class="status-card connection-card">
+                    <div class="status-bar connection-bar" id="connectionBar"></div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <span class="card-label">CONNECTION</span>
+                            <div class="status-icon-wrapper connection-icon-wrapper" id="connectionIconWrapper">
+                                <i data-lucide="wifi" class="status-icon"></i>
+                            </div>
+                        </div>
+                        <div class="card-value">
+                            <span class="value-text" id="connectionStatus">Connecting</span>
+                            <span class="value-subtext" id="connectionSubtext">...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Temperature Card -->
+                <div class="status-card temperature-card">
+                    <div class="status-bar temperature-bar"></div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <span class="card-label">TEMPERATURE</span>
+                            <div class="status-icon-wrapper temperature-icon-wrapper">
+                                <i data-lucide="thermometer" class="status-icon"></i>
+                            </div>
+                        </div>
+                        <div class="card-value">
+                            <span class="value-text" id="temperatureValue">...</span>
+                            <span class="value-unit">°C</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Humidity Card -->
+                <div class="status-card humidity-card">
+                    <div class="status-bar humidity-bar"></div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <span class="card-label">HUMIDITY</span>
+                            <div class="status-icon-wrapper humidity-icon-wrapper">
+                                <i data-lucide="droplet" class="status-icon"></i>
+                            </div>
+                        </div>
+                        <div class="card-value">
+                            <span class="value-text" id="humidityValue">...</span>
+                            <span class="value-unit">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TDS Card -->
+                <div class="status-card tds-card">
+                    <div class="status-bar tds-bar"></div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <span class="card-label">TDS LEVEL</span>
+                            <div class="status-icon-wrapper tds-icon-wrapper">
+                                <i data-lucide="beaker" class="status-icon"></i>
+                            </div>
+                        </div>
+                        <div class="card-value">
+                            <span class="value-text" id="tdsValue">...</span>
+                            <span class="value-unit">ppm</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <span class="last-update">Last Updated: <span id="lastUpdateTime">Just now</span></span>
+        </footer>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <!-- Configuration and App Script -->
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
