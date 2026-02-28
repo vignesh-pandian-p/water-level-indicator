@@ -17,6 +17,7 @@ const connectionIconWrapper = document.getElementById('connectionIconWrapper');
 const temperatureValue = document.getElementById('temperatureValue');
 const humidityValue = document.getElementById('humidityValue');
 const tdsValue = document.getElementById('tdsValue');
+const turbidityValue = document.getElementById('turbidityValue');
 const lastUpdateTime = document.getElementById('lastUpdateTime');
 
 // Tank configuration (from your receiver code)
@@ -129,6 +130,10 @@ function updateUI(data) {
 
     if (data.tds !== undefined) {
         tdsValue.textContent = Math.round(data.tds);
+    }
+
+    if (data.turbidity !== undefined) {
+        turbidityValue.textContent = data.turbidity.toFixed(2);
     }
 
     // Refresh Lucide icons (in case any were dynamically updated)
